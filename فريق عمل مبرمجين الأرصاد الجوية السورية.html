@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريق عمل المبرمجين في الأرصاد الجوية السورية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cyber-logo {
+            width: 500px;
+            height: 500px;
+            position: relative;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+        
+        .hologram-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .hologram-circle {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg, 
+                transparent, 
+                rgba(52, 152, 219, 0.7), 
+                rgba(41, 128, 185, 0.9), 
+                rgba(52, 152, 219, 0.7), 
+                transparent
+            );
+            box-shadow: 0 0 80px rgba(41, 128, 185, 0.6);
+            animation: rotate 20s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .inner-ring {
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hexagon-grid {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+            transform: rotate(45deg);
+        }
+        
+        .hexagon-cell {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        .hexagon-cell:nth-child(2n) {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        .hexagon-cell:hover {
+            background: rgba(52, 152, 219, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+        }
+        
+        .central-core {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(52, 152, 219, 0.8);
+            z-index: 10;
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        .core-icon {
+            font-size: 50px;
+            color: white;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+        }
+        
+        .orbiting-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate 30s linear infinite;
+        }
+        
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .orbit:nth-child(1) {
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+        }
+        
+        .orbit:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+        }
+        
+        .orbit:nth-child(3) {
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+        }
+        
+        .satellite {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .satellite:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .satellite:nth-child(2) {
+            top: 50%;
+            right: 0;
+            transform: translate(50%, -50%);
+        }
+        
+        .satellite:nth-child(3) {
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+        }
+        
+        .satellite:nth-child(4) {
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+        
+        .data-stream {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+        
+        .data-bit {
+            position: absolute;
+            color: rgba(52, 152, 219, 0.8);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+            animation: data-stream 10s linear infinite;
+        }
+        
+        /* نص نصف دائري */
+        .curved-text {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 15px rgba(52, 152, 219, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .curved-text-arabic {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffdd59;
+            text-shadow: 0 0 10px rgba(255, 221, 89, 0.7);
+        }
+        
+        .curved-text-container {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 120px;
+        }
+        
+        .curved-text-path {
+            fill: transparent;
+        }
+        
+        .logo-text {
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .main-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            animation: title-glow 3s infinite ease-in-out;
+        }
+        
+        .sub-title {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .syrian-text {
+            font-size: 32px;
+            color: #ff5252;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 82, 82, 0.7);
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        .syrian-text::before, .syrian-text::after {
+            content: '✻';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3498db;
+            font-size: 24px;
+        }
+        
+        .syrian-text::before {
+            left: -10px;
+        }
+        
+        .syrian-text::after {
+            right: -10px;
+        }
+        
+        .tech-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            border-radius: 30px;
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .tech-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.5);
+        }
+        
+        .tech-badge:hover::before {
+            left: 100%;
+        }
+        
+        .cyber-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .cyber-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.5), transparent);
+            height: 1px;
+            animation: cyber-line 5s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-20px) rotateX(0deg); }
+            100% { transform: translateY(0) rotateX(5deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 50px rgba(52, 152, 219, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 70px rgba(52, 152, 219, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 50px rgba(52, 152, 219, 0.8); }
+        }
+        
+        @keyframes data-stream {
+            0% { transform: translateY(500px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-500px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes title-glow {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes cyber-line {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(52, 152, 219, 0.8); }
+            to { text-shadow: 0 0 20px rgba(52, 152, 219, 1), 0 0 30px rgba(52, 152, 219, 0.8); }
+        }
+        
+        @media (max-width: 768px) {
+            .cyber-logo {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .central-core {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .core-icon {
+                font-size: 35px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+            }
+            
+            .sub-title {
+                font-size: 18px;
+            }
+            
+            .syrian-text {
+                font-size: 24px;
+            }
+            
+            .tech-badge {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .curved-text-container {
+                width: 350px;
+                top: -50px;
+            }
+            
+            .curved-text {
+                font-size: 18px;
+            }
+            
+            .curved-text-arabic {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cyber-logo">
+            <!-- نص نصف دائري -->
+            <div class="curved-text-container">
+                <svg viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg">
+                    <path id="curve" class="curved-text-path" d="M 50 100 A 200 200 0 1 1 450 100" />
+                    <text width="500" style="fill: #ffdd59;">
+                        <textPath xlink:href="#curve" startOffset="50%" text-anchor="middle" style="font-size: 26px; font-weight: bold;">
+                            فريق عمل المبرمجين في الأرصاد الجوية السورية
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+            
+            <div class="hologram-container">
+                <div class="hologram-circle">
+                    <div class="inner-ring">
+                        <div class="hexagon-grid">
+                            <div class="hexagon-cell"><i class="fas fa-wind"></i></div>
+                            <div class="hexagon-cell"><i class="fas fa-cloud"></i></div>
+                            <div class="hexagon-cell"><i class="fas fa-bolt"></i></div>
+                            <div class="hexagon-cell"><i class="fas fa-sun"></i></div>
+                            <div class="hexagon-cell"><i class="fas fa-code"></i></div>
+                            
+                            <div class="hexagon-cell"><i class="fas fa-microchip"></i></div>
+                            <div class="hexagon-cell">SYR</div>
+                            <div class="hexagon-cell"><i class="fas fa-satellite"></i></div>
+                            <div class="hexagon-cell">2023</div>
+                            <div class="hexagon-cell"><i class="fas fa-cloud-rain"></i></div>
+                            
+                            <div class="hexagon-cell"><i class="fas fa-temperature-low"></i></div>
+                            <div class="hexagon-cell">DATA</div>
+                            <div class="hexagon-cell"><i class="fas fa-server"></i></div>
+                            <div class="hexagon-cell">AI</div>
+                            <div class="hexagon-cell"><i class="fas fa-snowflake"></i></div>
+                            
+                            <div class="hexagon-cell"><i class="fas fa-laptop-code"></i></div>
+                            <div class="hexagon-cell">TECH</div>
+                            <div class="hexagon-cell"><i class="fas fa-radar"></i></div>
+                            <div class="hexagon-cell">CLOUD</div>
+                            <div class="hexagon-cell"><i class="fas fa-database"></i></div>
+                            
+                            <div class="hexagon-cell"><i class="fas fa-network-wired"></i></div>
+                            <div class="hexagon-cell">IoT</div>
+                            <div class="hexagon-cell"><i class="fas fa-chart-line"></i></div>
+                            <div class="hexagon-cell">API</div>
+                            <div class="hexagon-cell"><i class="fas fa-globe"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="central-core">
+                    <div class="core-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                </div>
+                
+                <div class="orbiting-elements">
+                    <div class="orbit"></div>
+                    <div class="orbit"></div>
+                    <div class="orbit"></div>
+                    
+                    <div class="satellite"><i class="fas fa-satellite-dish"></i></div>
+                    <div class="satellite"><i class="fas fa-radar"></i></div>
+                    <div class="satellite"><i class="fas fa-sensor"></i></div>
+                    <div class="satellite"><i class="fas fa-signal"></i></div>
+                </div>
+                
+                <div class="data-stream" id="dataStream"></div>
+            </div>
+        </div>
+        
+        <div class="logo-text">
+            <h1 class="main-title">فريق عمل المبرمجين في الأرصاد الجوية السورية</h1>
+            <div class="sub-title">Syrian Meteorology Programming Team</div>
+            <div class="syrian-text">نحو مستقبل رقمي للطقس السوري</div>
+            
+            <div class="tech-badges">
+                <div class="tech-badge">إبداع برمجي</div>
+                <div class="tech-badge">تطوير مستمر</div>
+                <div class="tech-badge">ابتكار تقني</div>
+                <div class="tech-badge">رؤية مستقبلية</div>
+            </div>
+        </div>
+        
+        <div class="cyber-lines">
+            <div class="cyber-line" style="top: 20%; width: 100px; animation-delay: 0s;"></div>
+            <div class="cyber-line" style="top: 40%; width: 150px; animation-delay: 1s;"></div>
+            <div class="cyber-line" style="top: 60%; width: 200px; animation-delay: 2s;"></div>
+            <div class="cyber-line" style="top: 80%; width: 120px; animation-delay: 3s;"></div>
+        </div>
+    </div>
+
+    <script>
+        // إنشاء تدفق البيانات
+        function createDataStream() {
+            const dataStream = document.getElementById('dataStream');
+            const characters = '01010101010101010101010101010101SYRWEATHERDATASYSTEM2023';
+            
+            for (let i = 0; i < 40; i++) {
+                const dataBit = document.createElement('div');
+                dataBit.className = 'data-bit';
+                
+                // نص عشوائي من الأحرف
+                let text = '';
+                for (let j = 0; j < 5; j++) {
+                    text += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                
+                dataBit.textContent = text;
+                dataBit.style.left = `${Math.random() * 100}%`;
+                dataBit.style.animationDelay = `${Math.random() * 10}s`;
+                dataBit.style.fontSize = `${12 + Math.random() * 10}px`;
+                dataBit.style.opacity = `${0.2 + Math.random() * 0.8}`;
+                
+                dataStream.appendChild(dataBit);
+            }
+        }
+        
+        // إنشاء خطوط السايبر
+        function createCyberLines() {
+            const cyberLines = document.querySelector('.cyber-lines');
+            
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'cyber-line';
+                
+                line.style.top = `${Math.random() * 100}%`;
+                line.style.width = `${50 + Math.random() * 150}px`;
+                line.style.animationDelay = `${Math.random() * 5}s`;
+                line.style.height = `${Math.random() > 0.5 ? '1px' : '2px'}`;
+                
+                cyberLines.appendChild(line);
+            }
+        }
+        
+        // تهيئة كل شيء عند تحميل الصفحة
+        window.onload = function() {
+            createDataStream();
+            createCyberLines();
+        };
+    </script>
+</body>
+</html>

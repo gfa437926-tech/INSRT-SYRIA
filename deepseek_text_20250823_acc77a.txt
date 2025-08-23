@@ -1,0 +1,8 @@
+الاسم: stations
+الأعمدة:
+- id: uuid (primary key، Default: gen_random_uuid())
+- code: text (unique)
+- name: text
+- elevation: numeric
+- password: text
+- created_at: timestamptz (Default: now())

@@ -1,0 +1,7 @@
+الاسم: users
+الأعمدة:
+- id: uuid (primary key، Default: gen_random_uuid())
+- username: text (unique)
+- password: text
+- role: text
+- created_at: timestamptz (Default: now())

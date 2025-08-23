@@ -1,0 +1,11 @@
+الاسم: hourly_data
+الأعمدة:
+- id: uuid (primary key، Default: gen_random_uuid())
+- station_id: uuid (foreign key to stations.id)
+- date: date
+- time: time
+- temperature: numeric
+- humidity: numeric
+- pressure: numeric
+- observer_id: uuid (foreign key to users.id)
+- created_at: timestamptz (Default: now())
